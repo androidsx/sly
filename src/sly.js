@@ -21,7 +21,6 @@
 	var wheelEvent = (document.implementation.hasFeature('Event.wheel', '3.0') ? 'wheel.' : 'mousewheel.') + namespace;
 	var clickEvent = 'click.' + namespace;
 	var mouseDownEvent = 'mousedown.' + namespace;
-	var interactiveElements = ['INPUT', 'SELECT', 'BUTTON', 'TEXTAREA'];
 	var tmpArray = [];
 	var time;
 
@@ -1508,7 +1507,7 @@
 		 * @return {Boolean}
 		 */
 		function isInteractive(element) {
-			return ~$.inArray(element.nodeName, interactiveElements) || $(element).is(o.interactive);
+			return ~$.inArray(element.nodeName, o.interactiveElements) || $(element).is(o.interactive);
 		}
 
 		/**
@@ -2157,7 +2156,7 @@
 		elasticBounds: false, // Stretch SLIDEE position limits when dragging past FRAME boundaries.
 		dragThreshold: 3,     // Distance in pixels before Sly recognizes dragging.
 		interactive:   null,  // Selector for special interactive elements.
-
+		interactiveElements : ['INPUT', 'SELECT', 'BUTTON', 'TEXTAREA'],
 		// Scrollbar
 		scrollBar:     null,  // Selector or DOM element for scrollbar container.
 		dragHandle:    false, // Whether the scrollbar handle should be draggable.
