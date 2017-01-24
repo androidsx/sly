@@ -21,7 +21,6 @@
 	var wheelEvent = (document.implementation.hasFeature('Event.wheel', '3.0') ? 'wheel.' : 'mousewheel.') + namespace;
 	var clickEvent = 'click.' + namespace;
 	var mouseDownEvent = 'mousedown.' + namespace;
-	var interactiveElements = ['INPUT', 'SELECT', 'BUTTON', 'TEXTAREA'];
 	var tmpArray = [];
 	var time;
 
@@ -210,7 +209,7 @@
 					// Item
 					var $item = $(element);
 					var rect = element.getBoundingClientRect();
-					var itemSize = round(o.horizontal ? rect.width || rect.right - rect.left : rect.height || rect.bottom - rect.top);
+					var itemSize = (o.horizontal ? rect.width || rect.right - rect.left : rect.height || rect.bottom - rect.top);
 					var itemMarginStart = getPx($item, o.horizontal ? 'marginLeft' : 'marginTop');
 					var itemMarginEnd = getPx($item, o.horizontal ? 'marginRight' : 'marginBottom');
 					var itemSizeFull = itemSize + itemMarginStart + itemMarginEnd;
@@ -1508,7 +1507,7 @@
 		 * @return {Boolean}
 		 */
 		function isInteractive(element) {
-			return ~$.inArray(element.nodeName, interactiveElements) || $(element).is(o.interactive);
+			return ~$.inArray(element.nodeName, o.interactiveElements) || $(element).is(o.interactive);
 		}
 
 		/**
@@ -2157,7 +2156,7 @@
 		elasticBounds: false, // Stretch SLIDEE position limits when dragging past FRAME boundaries.
 		dragThreshold: 3,     // Distance in pixels before Sly recognizes dragging.
 		interactive:   null,  // Selector for special interactive elements.
-
+		interactiveElements : ['INPUT', 'SELECT', 'BUTTON', 'TEXTAREA'],
 		// Scrollbar
 		scrollBar:     null,  // Selector or DOM element for scrollbar container.
 		dragHandle:    false, // Whether the scrollbar handle should be draggable.
@@ -2200,4 +2199,8 @@
 		activeClass:   'active',  // Class for active items and pages.
 		disabledClass: 'disabled' // Class for disabled navigation elements.
 	};
+	//Export module for nodejs browserify
+	if (typeof exports === 'object') {
+			module.exports = Sly;
+	}
 }(jQuery, window));
