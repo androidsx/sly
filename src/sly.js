@@ -208,13 +208,31 @@
 				$items.each(function (i, element) {
 					// Item
 					var $item = $(element);
-					var rect = element.getBoundingClientRect();
-					var itemSize = (o.horizontal ? rect.width || rect.right - rect.left : rect.height || rect.bottom - rect.top);
-					var itemMarginStart = getPx($item, o.horizontal ? 'marginLeft' : 'marginTop');
-					var itemMarginEnd = getPx($item, o.horizontal ? 'marginRight' : 'marginBottom');
-					var itemSizeFull = itemSize + itemMarginStart + itemMarginEnd;
-					var singleSpaced = !itemMarginStart || !itemMarginEnd;
 					var item = {};
+					var itemSize;
+				    var itemMarginStart;
+				    var itemMarginEnd;
+				    var itemSizeFull;
+				    var singleSpaced;
+
+					if(o.itemWidth){
+						itemSize = o.itemWidth;
+						if(lastItemsCount === i){
+							itemMarginStart = 0;
+						}else{
+							itemMarginStart = o.itemMargin ? o.itemMargin : 0 ;
+						}
+						itemSizeFull =  itemSize + itemMarginStart;
+						singleSpaced = !(o.itemMargin);
+					}else{
+						var rect = element.getBoundingClientRect();
+						itemSize = (o.horizontal ? rect.width || rect.right - rect.left : rect.height || rect.bottom - rect.top);
+						itemMarginStart = getPx($item, o.horizontal ? 'marginLeft' : 'marginTop');
+						itemMarginEnd = getPx($item, o.horizontal ? 'marginRight' : 'marginBottom');
+						itemSizeFull = itemSize + itemMarginStart + itemMarginEnd;
+						singleSpaced = !itemMarginStart || !itemMarginEnd;
+					}
+
 					item.el = element;
 					item.size = singleSpaced ? itemSize : itemSizeFull;
 					item.half = item.size / 2;
