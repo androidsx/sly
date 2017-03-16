@@ -1,6 +1,6 @@
 {
 	"name": "sly",
-	"version": "0.0.0",
+	"version": "0.0.1",
 	"main": "./src/sly.js",
 	"devDependencies": {
 		"grunt-contrib-jshint": "~0.7.2",

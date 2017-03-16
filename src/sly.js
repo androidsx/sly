@@ -56,7 +56,6 @@
 
 		// Extend options
 		var o = $.extend({}, Sly.defaults, options);
-
 		// Private variables
 		var self = this;
 		var parallax = isNumber(frame);
@@ -226,7 +225,8 @@
 						singleSpaced = !(o.itemMargin);
 					}else{
 						var rect = element.getBoundingClientRect();
-						itemSize = (o.horizontal ? rect.width || rect.right - rect.left : rect.height || rect.bottom - rect.top);
+						
+						itemSize = (o.horizontal ? _round(rect.width) || _round(rect.right) - _round(rect.left) : _round(rect.height) || _round(rect.bottom) - _round(rect.top));
 						itemMarginStart = getPx($item, o.horizontal ? 'marginLeft' : 'marginTop');
 						itemMarginEnd = getPx($item, o.horizontal ? 'marginRight' : 'marginBottom');
 						itemSizeFull = itemSize + itemMarginStart + itemMarginEnd;
@@ -268,9 +268,10 @@
 					items.push(item);
 					lastItem = item;
 				});
-
+				slideeSize = _round(slideeSize);
 				// Resize SLIDEE to fit all items
 				$slidee[0].style[o.horizontal ? 'width' : 'height'] = (borderBox ? slideeSize: slideeSize - paddingStart - paddingEnd) + 'px';
+
 
 				// Adjust internal SLIDEE size for last margin
 				slideeSize -= ignoredMargin;
@@ -2018,7 +2019,11 @@
 	 * @return {Int}
 	 */
 	function getPx($item, property) {
-		return 0 | round(String($item.css(property)).replace(/[^\-0-9.]/g, ''));
+		return 0 | round( String($item.css(property)).replace(/[^\-0-9.]/g, '') );
+	}
+
+	function _round(number){
+		return (Math.round(number * 100) / 100);
 	}
 
 	/**
