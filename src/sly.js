@@ -225,8 +225,13 @@
 						singleSpaced = !(o.itemMargin);
 					}else{
 						var rect = element.getBoundingClientRect();
-						
-						itemSize = (o.horizontal ? _round(rect.width) || _round(rect.right) - _round(rect.left) : _round(rect.height) || _round(rect.bottom) - _round(rect.top));
+						if(o.horizontal){
+							itemSize = Math.ceil(rect.width);
+							element.setAttribute("style","width:"+itemSize+"px");
+						}else{
+							itemSize = Math.ceil(rect.height);
+							element.setAttribute("style","width:"+height+"px");				
+						}
 						itemMarginStart = getPx($item, o.horizontal ? 'marginLeft' : 'marginTop');
 						itemMarginEnd = getPx($item, o.horizontal ? 'marginRight' : 'marginBottom');
 						itemSizeFull = itemSize + itemMarginStart + itemMarginEnd;
